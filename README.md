@@ -89,9 +89,9 @@ for item in response['Items']:
 
 Run:
 
-## python dynamo_app.py
+python dynamo_app.py
 
-✅ Output
+## ✅ Output
 Stored Items:
 
 {'Email': 'priyanka@gmail.com', 'Name': 'Priyanka Raut', 'Role': 'Cloud Intern'}
