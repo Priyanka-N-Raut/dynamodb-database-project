@@ -1,122 +1,125 @@
-# 📌 AWS RDS – Intern Management Database Project
+# 📌 AWS DynamoDB – Intern Management System
 
 ## 📖 Project Overview
 
-This project demonstrates how to set up a Managed Relational Database Service (RDS) on AWS using MySQL.
+This project demonstrates how to set up a Managed NoSQL Database using Amazon DynamoDB on AWS.
 
-We created a database to store intern information and connected it using:
+We created a table named Interns, inserted dummy records, and connected it to a local Python script to verify data persistence.
 
-✅ MySQL Workbench (SQL Client)
-
-✅ Python Script (mysql-connector)
-
-This project showcases hands-on experience with Cloud Database Management as a Cloud Intern.
-
+This project showcases hands-on experience with serverless cloud databases as a Cloud Computing Intern.
 
 ## 🛠 Technologies Used
 
-AWS RDS (MySQL)
+AWS DynamoDB
 
-EC2 Security Groups
-
-MySQL Workbench
+AWS IAM
 
 Python 3
 
-mysql-connector-python
-
+Boto3 (AWS SDK for Python)
 
 ## 🏗 Architecture
 
-Local Machine (Python / MySQL Client)
+Local Machine (Python Script)
 ⬇
-AWS RDS (MySQL Database)
+AWS DynamoDB (Managed NoSQL Database)
 ⬇
-Interns Table (Data Stored in Cloud)
+Interns Table (Stored Data)
 
+## 🚀 Implementation Steps
 
-## 🚀 Steps Performed
-1️⃣ Create RDS Instance
+1️⃣ Create DynamoDB Table
 
-Engine: MySQL
+Service: DynamoDB
 
-Instance type: db.t3.micro (Free Tier)
+Table Name: interns
 
-Public Access: Enabled
+Partition Key: Email (String)
 
-Port: 3306
+Region: us-east-1
 
-Configured Security Group to allow My IP
+## 2️⃣ Insert Dummy Records
 
+Inserted sample records using AWS Console:
 
-## 1. Create Database & Table
-CREATE DATABASE intern_management;
-USE intern_management;
+{
+  "Email": "priyanka@gmail.com",
+  "Name": "Priyanka Raut",
+  "Role": "Cloud Intern"
+}
 
-CREATE TABLE Interns (
-    Name VARCHAR(100),
-    Role VARCHAR(100),
-    Email VARCHAR(100)
-);
+Additional records:
 
-INSERT INTO Interns VALUES
-('Priyanka Raut', 'Cloud Intern', 'priyanka@gmail.com'),
-('Rahul Sharma', 'DevOps Intern', 'rahul@gmail.com');
+{
+  "Email": "rahul@gmail.com",
+  "Name": "Rahul Sharma",
+  "Role": "DevOps Intern"
+}
 
-## 2. Connect Using Python Script
+## 3️⃣ Connect DynamoDB Using Python
 
-Install dependency:
+Install boto3
+pip install boto3
+Configure AWS Credentials
+aws configure
 
-pip install mysql-connector-python
+Provide:
 
-Python Code:
+AWS Access Key
 
-import mysql.connector
+AWS Secret Key
 
-connection = mysql.connector.connect(
-    host="your-rds-endpoint",
-    user="admin",
-    password="your-password",
-    database="intern_management"
-)
+Region (us-east-1)
 
-cursor = connection.cursor()
-cursor.execute("SELECT * FROM Interns")
+Output format (json)
 
-for row in cursor.fetchall():
-    print(row)
+## 4️⃣ Python Script to Fetch Data
 
-connection.close()
+import boto3
+
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('interns')
+
+response = table.scan()
+
+print("Stored Items:\n")
+
+for item in response['Items']:
+    print(item)
 
 Run:
 
-python app.py
+## python dynamo_app.py
 
-## ✅ Output
-('Priyanka Raut', 'Cloud Intern', 'priyanka@gmail.com')
-('Rahul Sharma', 'DevOps Intern', 'rahul@gmail.com')
+✅ Output
+Stored Items:
 
-## 🔒 Security Configuration
+{'Email': 'priyanka@gmail.com', 'Name': 'Priyanka Raut', 'Role': 'Cloud Intern'}
+{'Email': 'rahul@gmail.com', 'Name': 'Rahul Sharma', 'Role': 'DevOps Intern'}
 
-Enabled Public Access (for testing)
+## 🔒 Key Features
 
-Opened Port 3306 in Security Group
+Fully managed NoSQL database
 
-Restricted inbound access to My IP only
+Serverless architecture
 
+High scalability and availability
+
+Low latency performance
+
+Secure access via IAM
 
 ## 🎯 Learning Outcomes
 
-Provisioned a managed database in AWS
+Created and configured DynamoDB table
 
-Configured networking & security rules
+Understood partition key concept
 
-Connected cloud database with local machine
+Inserted and retrieved data
 
-Performed CRUD operations using SQL
+Connected AWS services with Python
 
-Integrated AWS RDS with Python
-
+Implemented a serverless database solution
 
 ## 👩‍💻 Author
 
